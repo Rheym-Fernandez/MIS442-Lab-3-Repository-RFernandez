@@ -12,6 +12,18 @@ namespace MMABooksProps
 {
     public class CustomerProps : IBaseProps
     {
+        //Properties for the Customer
+        public string CustomerID { get; set; } = "";
+
+        public string Name { get; set; } = "";
+
+        public string Address { get; set; } = "";
+
+        public string State { get; set; } = "";
+
+        public string ZipCode { get; set; } = "";
+
+
         public object Clone()
         {
             throw new NotImplementedException();
