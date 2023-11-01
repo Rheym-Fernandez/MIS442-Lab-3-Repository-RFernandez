@@ -19,7 +19,7 @@ using DBDbType = MySql.Data.MySqlClient.MySqlDbType;
 
 namespace MMABooksDB
 {
-    public class CustomerDB
+    public class CustomerDB : DBBase, IReadDB, IWriteDB
     {
         /*
         public IBaseProps Create(IBaseProps p)
@@ -61,5 +61,29 @@ namespace MMABooksDB
             }
         }
          */
+        public IBaseProps Create(IBaseProps props)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Delete(IBaseProps props)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IBaseProps Retrieve(object key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public object RetrieveAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Update(IBaseProps props)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
