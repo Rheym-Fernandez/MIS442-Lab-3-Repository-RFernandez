@@ -6,15 +6,20 @@ using System;
 namespace MMABooksTests
 {
     [TestFixture]
-    public class StatePropsTests
+    public class CustomerPropsTests
     {
-        StateProps props;
+        CustomerProps props;
         [SetUp]
         public void Setup()
         {
-            props = new StateProps();
-            props.Code = "11";
-            props.Name = "This is a test";
+            props = new CustomerProps();
+            props.CustomerID = 1;
+            props.Name = "Mickey";
+            props.Address = "101 Main Street";
+            props.City = "Orlando";
+            props.State = "FL";
+            props.ZipCode = "10001";
+
         }
 
         [Test]
@@ -22,17 +27,17 @@ namespace MMABooksTests
         {
             string jsonString = props.GetState();
             Console.WriteLine(jsonString);
-            Assert.IsTrue(jsonString.Contains(props.Code));
             Assert.IsTrue(jsonString.Contains(props.Name));
+            Assert.IsTrue(jsonString.Contains(props.Address));
         }
 
         [Test]
         public void TestSetState()
         {
             string jsonString = props.GetState();
-            StateProps newProps = new StateProps();
+            CustomerProps newProps = new CustomerProps();
             newProps.SetState(jsonString);
-            Assert.AreEqual(props.Code, newProps.Code);
+            Assert.AreEqual(props.CustomerID, newProps.CustomerID);
             Assert.AreEqual(props.Name, newProps.Name);
             Assert.AreEqual(props.ConcurrencyID, newProps.ConcurrencyID);
         }
@@ -40,8 +45,8 @@ namespace MMABooksTests
         [Test]
         public void TestClone()
         {
-            StateProps newProps = (StateProps)props.Clone();
-            Assert.AreEqual(props.Code, newProps.Code);
+            CustomerProps newProps = (CustomerProps)props.Clone();
+            Assert.AreEqual(props.CustomerID, newProps.CustomerID);
             Assert.AreEqual(props.Name, newProps.Name);
             Assert.AreEqual(props.ConcurrencyID, newProps.ConcurrencyID);
         }
