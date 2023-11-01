@@ -67,7 +67,7 @@ END //
 DELIMITER ;
 
 DELIMITER // 
-CREATE PROCEDURE usp_StateUpdate (in custID int, in name varchar(20), in conCurrId int)
+CREATE PROCEDURE usp_CustomerUpdate (in custID int, in name varchar(20), in conCurrId int)
 BEGIN
 	Update customers
     Set name = name, concurrencyid = (concurrencyid + 1)
