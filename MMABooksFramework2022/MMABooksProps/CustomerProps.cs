@@ -10,6 +10,7 @@ using System.Text.Json.Serialization;
 
 namespace MMABooksProps
 {
+    [Serializable()]
     public class CustomerProps : IBaseProps
     {
         //Properties for the Customer
@@ -63,7 +64,7 @@ namespace MMABooksProps
 
         public void SetState(DBDataReader dr)
         {
-            this.CustomerID = (int)dr["CustomerID"]);
+            this.CustomerID = (int)dr["CustomerID"];
             this.Name = (string)dr["Name"];
             this.Address = (string)dr["Address"];
             this.City = (string)dr["City"];
