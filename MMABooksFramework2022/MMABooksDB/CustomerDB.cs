@@ -21,50 +21,49 @@ namespace MMABooksDB
 {
     public class CustomerDB : DBBase, IReadDB, IWriteDB
     {
-        /*
-        public IBaseProps Create(IBaseProps p)
-        {
-            int rowsAffected = 0;
-            CustomerProps props = (CustomerProps)p;
+            public IBaseProps Create(IBaseProps p)
+            {
+                int rowsAffected = 0;
+                CustomerProps props = (CustomerProps)p;
 
-            DBCommand command = new DBCommand();
-            command.CommandText = "usp_CustomerCreate";
-            command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.Add("custId", DBDbType.Int32);
-            command.Parameters.Add("name_p", DBDbType.VarChar);
-            ... there are more parameters here
+                DBCommand command = new DBCommand();
+                command.CommandText = "usp_CustomerCreate";
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add("custID", DBDbType.Int32);
+                command.Parameters.Add("name_p", DBDbType.VarChar);
+                command.Parameters.Add("Address_p", DBDbType.VarChar);
+                command.Parameters.Add("City_p", DBDbType.VarChar);
+                command.Parameters.Add("State_p", DBDbType.VarChar);
+                command.Parameters.Add("ZipCode_p", DBDbType.VarChar);
+
+            // ... there are more parameters here
             command.Parameters[0].Direction = ParameterDirection.Output;
-            command.Parameters["name_p"].Value = props.Name;
-            ... and more values here
+                command.Parameters["name_p"].Value = props.Name;
+               // ... and more values here
 
             try
-            {
-                rowsAffected = RunNonQueryProcedure(command);
-                if (rowsAffected == 1)
                 {
-                    props.CustomerID = (int)command.Parameters[0].Value;
-                    props.ConcurrencyID = 1;
-                    return props;
+                    rowsAffected = RunNonQueryProcedure(command);
+                    if (rowsAffected == 1)
+                    {
+                        props.CustomerID = (int)command.Parameters[0].Value;
+                        props.ConcurrencyID = 1;
+                        return props;
+                    }
+                    else
+                        throw new Exception("Unable to insert record. " + props.ToString());
                 }
-                else
-                    throw new Exception("Unable to insert record. " + props.ToString());
+                catch (Exception e)
+                {
+                    // log this error
+                    throw;
+                }
+                finally
+                {
+                    if (mConnection.State == ConnectionState.Open)
+                        mConnection.Close();
+                }
             }
-            catch (Exception e)
-            {
-                // log this error
-                throw;
-            }
-            finally
-            {
-                if (mConnection.State == ConnectionState.Open)
-                    mConnection.Close();
-            }
-        }
-         */
-        public IBaseProps Create(IBaseProps props)
-        {
-            throw new NotImplementedException();
-        }
 
         public bool Delete(IBaseProps props)
         {
@@ -73,7 +72,42 @@ namespace MMABooksDB
 
         public IBaseProps Retrieve(object key)
         {
-            throw new NotImplementedException();
+           DBDataReader data = null;
+            CustomerProps props = new CustomerProps();
+            DBCommand command = new DBCommand();
+
+            command.CommandText = "usp_CustomerSelect";
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("custID", DBDbType.Int32);
+            command.Parameters["custID"].Value = (int)key;
+
+            try
+            {
+                data = RunProcedure(command);
+                if (!data.IsClosed)
+                {
+                    if (data.Read())
+                    {
+                        props.SetState(data);
+                    }
+                    else
+                        throw new Exception("Record does not exist in the database.");
+                }
+                return props;
+            }
+            catch (Exception e)
+            {
+                // log this exception
+                throw;
+            }
+            finally
+            {
+                if (data != null)
+                {
+                    if (!data.IsClosed)
+                        data.Close();
+                }
+            }
         }
 
         public object RetrieveAll()
