@@ -22,6 +22,7 @@ namespace MMABooksProps
         /// </summary>
         public int ConcurrencyID { get; set; } = 0;
         #endregion
+
         public object Clone()
         {
             StateProps p = new StateProps();
