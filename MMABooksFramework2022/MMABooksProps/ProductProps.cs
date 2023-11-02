@@ -19,6 +19,16 @@ namespace MMABooksProps
 {
     internal class ProductProps : IBaseProps
     {
+        //Properties for the Product
+        public int ProductID { get; set; } = 0;
+
+        public string ProductCode { get; set; } = "";
+
+        public string Description { get; set; } = "";
+
+        public decimal UnitPrice { get; set; } = 0;
+        public int OnHandQuantity { get; set; } = 0;
+
         public object Clone()
         {
             throw new NotImplementedException();
