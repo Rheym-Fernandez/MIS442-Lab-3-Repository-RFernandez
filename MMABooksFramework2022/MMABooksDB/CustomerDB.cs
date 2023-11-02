@@ -21,7 +21,10 @@ namespace MMABooksDB
 {
     public class CustomerDB : DBBase, IReadDB, IWriteDB
     {
-            public IBaseProps Create(IBaseProps p)
+        public CustomerDB() : base() { }
+        public CustomerDB(DBConnection cn) : base(cn) { }
+
+        public IBaseProps Create(IBaseProps p)
             {
                 int rowsAffected = 0;
                 CustomerProps props = (CustomerProps)p;

@@ -13,7 +13,7 @@ using MySql.Data.MySqlClient;
 namespace MMABooksTests
 {
     [TestFixture]
-    internal class CustomerDBTest
+    public class CustomerDBTest
     {
         CustomerDB db;
 

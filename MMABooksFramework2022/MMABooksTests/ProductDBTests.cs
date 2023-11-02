@@ -25,6 +25,8 @@ namespace MMABooksTests
             db.RunNonQueryProcedure(command);
         }
 
+        //Must fix remaining code from this point onwards, look at the MYSQL stored procedures to determine if they are correct.
+
         [Test]
         public void TestRetrieve()
         {
