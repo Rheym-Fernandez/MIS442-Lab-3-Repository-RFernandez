@@ -53,7 +53,7 @@ END //
 DELIMITER ; 
 
 DELIMITER // 
-CREATE PROCEDURE usp_CustomerSelect (in CustID int)
+CREATE PROCEDURE usp_CustomerSelect (in custID int)
 BEGIN
 	Select * from customers where customerID=custID;
 END //
@@ -72,5 +72,45 @@ BEGIN
 	Update customers
     Set name = name, concurrencyid = (concurrencyid + 1)
     Where customerID = custID and concurrencyid = conCurrId;
+END //
+DELIMITER ;
+
+*DELIMITER // 
+CREATE PROCEDURE usp_ProductCreate (out ProductID int, in ProductCode varchar(100), in Description varchar(50), in UnitPrice decimal, in OnHandQuantity int)
+BEGIN
+	Insert into products (ProductCode, Description, UnitPrice, OnHandQuantity, concurrencyid)
+    Values (ProductCode, Description, UnitPrice, OnHandQuantity);
+    Select LAST_INSERT_ID() into ProductID;
+    
+END //
+DELIMITER ; 
+
+DELIMITER // 
+CREATE PROCEDURE usp_ProductDelete (in ProductID int, in conCurrId int)
+BEGIN
+	Delete from products where ProductID = ProductID and ConcurrencyID = conCurrId;
+END //
+DELIMITER ; 
+
+DELIMITER // 
+CREATE PROCEDURE usp_ProductSelect (in ProductID int)
+BEGIN
+	Select * from products where ProductID=ProductID;
+END //
+DELIMITER ;
+
+DELIMITER // 
+CREATE PROCEDURE usp_ProductSelectAll ()
+BEGIN
+	Select * from products order by ProductCode;
+END //
+DELIMITER ;
+
+DELIMITER // 
+CREATE PROCEDURE usp_ProductUpdaten (in ProductID int, in ProductCode varchar(100), in Description varchar(50), in UnitPrice decimal, in OnHandQuantity int) 
+BEGIN
+	Update products
+    Set name = ProductCode, Description, UnitPrice, OnHandQuantity, concurrencyid = (concurrencyid + 1)
+    Where ProductID = ProductID and concurrencyid = conCurrId;
 END //
 DELIMITER ;
