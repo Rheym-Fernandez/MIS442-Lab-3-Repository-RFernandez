@@ -17,7 +17,7 @@ using MySql.Data.MySqlClient;
 
 namespace MMABooksProps
 {
-    internal class ProductProps : IBaseProps
+    public class ProductProps : IBaseProps
     {
         //Properties for the Product
         public int ProductID { get; set; } = 0;
