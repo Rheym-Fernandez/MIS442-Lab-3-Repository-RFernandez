@@ -29,24 +29,50 @@ namespace MMABooksProps
         public decimal UnitPrice { get; set; } = 0;
         public int OnHandQuantity { get; set; } = 0;
 
+        /// <summary>
+        /// ConcurrencyID. Don't manipulate directly.
+        /// </summary>
+
+        public int ConcurrencyID { get; set; } = 0;
+       
         public object Clone()
         {
-            throw new NotImplementedException();
+            ProductProps p = new ProductProps();
+            p.ProductID = this.ProductID;
+            p.ProductCode = this.ProductCode;
+            p.Description = this.Description;
+            p.UnitPrice = this.UnitPrice;
+            p.OnHandQuantity = this.OnHandQuantity;
+            p.ConcurrencyID = this.ConcurrencyID;
+            return p;
         }
 
         public string GetState()
         {
-            throw new NotImplementedException();
+            string jsonString;
+            jsonString = JsonSerializer.Serialize(this);
+            return jsonString;
         }
 
         public void SetState(string jsonString)
         {
-            throw new NotImplementedException();
+            ProductProps p = JsonSerializer.Deserialize<ProductProps>(jsonString);
+            this.ProductID = p.ProductID;
+            this.ProductCode = p.ProductCode;
+            this.Description = p.Description;
+            this.UnitPrice = p.UnitPrice;
+            this.OnHandQuantity = p.OnHandQuantity;
+            this.ConcurrencyID = p.ConcurrencyID;
         }
 
         public void SetState(DBDataReader dr)
         {
-            throw new NotImplementedException();
+            this.ProductID = (int)dr["ProductID"];
+            this.ProductCode = (string)dr["ProductCode"];
+            this.Description = (string)dr["Description"];
+            this.UnitPrice = (decimal)dr["UnitPrice"];
+            this.OnHandQuantity = (int)dr["OnHandQuantity"];
+            this.ConcurrencyID = (Int32)dr["ConcurrencyID"];
         }
     }
 }
